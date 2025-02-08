@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  database:
+    build: ./database
+    container_name: mysql_db # the database is stored inside the container itself for persistence
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydb
+    ports:
+      - "3307:3306"
+
+  backend:
+    build: ./backend
+    container_name: flask_app
+    restart: always
+    depends_on:
+      - database
+    environment:
+      DB_HOST: database
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: mydb
+    ports:
+      - "5001:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: react_app
+    restart: always
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - backend
