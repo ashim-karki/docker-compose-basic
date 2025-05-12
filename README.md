@@ -158,5 +158,3 @@ Flask Backend (localhost:5001)
     ↓ connects to
 MySQL DB (localhost:3307, inside container it's just 'database':3306)
 ```
-
-Would you like a diagram of how the containers interact?
